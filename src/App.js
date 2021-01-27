@@ -44,7 +44,7 @@ function App() {
         })
       })
     }
-    // console.log('I HAVE A TOKEN:', _token)
+    console.log('I HAVE A TOKEN:', _token)
   }, [])
 
   // console.log("Checkout this user:", user)
