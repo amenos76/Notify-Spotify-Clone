@@ -31,14 +31,19 @@ function App() {
       
       spotify.getMe().then(user => {
         // console.log('person', user)
-
         dispatch({
           type: "SET_USER",
           user: user
         })
       })
-    }
 
+      spotify.getUserPlaylists().then((playlists) => {
+          dispatch({
+            type: "SET_PLAYLISTS",
+            playlists: playlists
+        })
+      })
+    }
     // console.log('I HAVE A TOKEN:', _token)
   }, [])
 
