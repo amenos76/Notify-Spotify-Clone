@@ -1,4 +1,6 @@
 import React from 'react'
+import { useEffect, useState } from 'react'
+import { useDataLayerValue } from '../DataLayer'
 import './Footer.css'
 
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
@@ -9,24 +11,118 @@ import RepeatIcon from '@material-ui/icons/Repeat';
 import { Grid, Slider } from '@material-ui/core'
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import VolumeDownIcon from '@material-ui/icons/VolumeDown';
+import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 
-export default function Footer() {
+
+export default function Footer({ spotify }) {
+
+  const [{ item, playing, volume}, dispatch] = useDataLayerValue()
+
+  useEffect(() => {
+    spotify.getMyCurrentPlaybackState().then((r) => {
+      // console.log(r);
+
+      dispatch({
+        type: "SET_PLAYING",
+        playing: r.is_playing,
+      });
+
+      dispatch({
+        type: "SET_ITEM",
+        item: r.item,
+      });
+    });
+  }, [spotify]);
+
+  const handlePlayPause = () => {
+    if (playing) {
+      spotify.pause();
+      dispatch({
+        type: "SET_PLAYING",
+        playing: false,
+      });
+    } else {
+      spotify.play();
+      dispatch({
+        type: "SET_PLAYING",
+        playing: true,
+      });
+    }
+  };
+
+  const skipNext = () => {
+    spotify.skipToNext()
+    spotify.getMyCurrentPlayingTrack().then((r) => {
+      // console.log("skip next currently playing is:", r)
+      dispatch({
+        type: "SET_ITEM",
+        item: r.item,
+      });
+      dispatch({
+        type: "SET_PLAYING",
+        playing: true,
+      });
+    });
+  };
+
+  const skipPrevious = () => {
+    spotify.skipToPrevious();
+    spotify.getMyCurrentPlayingTrack().then((r) => {
+      dispatch({
+        type: "SET_ITEM",
+        item: r.item,
+      });
+      dispatch({
+        type: "SET_PLAYING",
+        playing: true,
+      });
+    });
+  };
+
+  const changeVolume = (event, value) => {
+    // console.log('Setting volume to:', value)
+    spotify.setVolume(value)
+    dispatch({
+      type: "SET_VOLUME",
+      volume: value
+    })
+  };
+
   return (
     <div className="footer">
 
       <div className='footer-left'>
-        <img className="footer-albumLogo" src="https://is4-ssl.mzstatic.com/image/thumb/Music124/v4/a3/82/9c/a3829cd4-2172-70c9-fabd-aeb379811378/source/200x200bb.jpg" alt="" />
-        <div className="footer-songInfo">
-          <h4>R.Y.F.F.</h4>
-          <p>CITRA</p>
-        </div>
+        <img className="footer-albumLogo" src={item?.album.images[0].url} alt={item?.name} />
+        {item ? (
+          <div className="footer-songInfo">
+            <h4>{item.name}</h4>
+            <p>{item.artists.map((artist) => artist.name).join(", ")}</p>
+          </div>
+        ) : (
+          <div className="footer-songInfo">
+            <h4>No song is playing</h4>
+            <p>...</p>
+          </div>
+        )}
       </div>
 
       <div className='footer-center'>
         <ShuffleIcon className="footer-green" />
-        <SkipPreviousIcon className="footer-icon" />
-        <PlayCircleOutlineIcon fontSize="large" className="footer-icon" />
-        <SkipNextIcon className="footer-icon" />
+        <SkipPreviousIcon onClick={skipPrevious} className="footer-icon" />
+        {playing ? (
+          <PauseCircleOutlineIcon
+            onClick={handlePlayPause}
+            fontSize="large"
+            className="footer-icon"
+          />
+        ) : (
+          <PlayCircleOutlineIcon
+            onClick={handlePlayPause}
+            fontSize="large"
+            className="footer-icon"
+          />
+        )}
+        <SkipNextIcon onClick={skipNext} className="footer-icon" />
         <RepeatIcon className="footer-green" />
 
       </div>
@@ -40,7 +136,7 @@ export default function Footer() {
             <VolumeDownIcon />
           </Grid>
           <Grid item xs>
-            <Slider />
+            <Slider onChange={changeVolume} value={volume} aria-labelledby="continuous-slider" />
           </Grid>
         </Grid>
       </div>

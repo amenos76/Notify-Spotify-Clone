@@ -12,7 +12,7 @@ const spotify = new SpotifyWebApi()
 
 function App() {
   // const [token, setToken] = useState(null)
-  const [{user, token}, dispatch] = useDataLayerValue()
+  const [{token}, dispatch] = useDataLayerValue()
 
   useEffect(() => {
     const tokenHash = getTokenFromUrl()
@@ -37,23 +37,47 @@ function App() {
         })
       })
 
-      spotify.getUserPlaylists().then((playlists) => {
-          dispatch({
-            type: "SET_PLAYLISTS",
-            playlists: playlists
-        })
-      })
-
       spotify.getPlaylist("37i9dQZEVXcI9MOD0N706T").then((discover_weekly) => {
         dispatch({
           type: "SET_DISCOVER_WEEKLY",
           discover_weekly: discover_weekly
         })
+
+        // dispatch({
+        //   type: "SET_SELECTED_PLAYLIST",
+        //   selected_playlist: discover_weekly
+        // })
+      })
+
+      spotify.getFeaturedPlaylists().then((featured_playlists) => {
+        dispatch({
+          type: "SET_FEATURED_PLAYLISTS",
+          featured_playlists: featured_playlists.playlists.items
+        })
+      })
+
+      dispatch({
+        type: "SET_SPOTIFY",
+        spotify: spotify
+      });
+
+      spotify.getUserPlaylists().then((playlists) => {
+        dispatch({
+          type: "SET_PLAYLISTS",
+          playlists: playlists
+        });
+      });
+
+      spotify.getMyCurrentPlayingTrack().then((r) => {
+        dispatch({
+          type: "SET_ITEM",
+          item: r.item
+        })
       })
 
     }
     console.log('I HAVE A TOKEN:', _token)
-  }, [])
+  }, [token, dispatch])
 
   // console.log("Checkout this user:", user)
   // console.log("Checkout this token:", token)
