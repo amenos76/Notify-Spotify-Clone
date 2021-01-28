@@ -7,10 +7,11 @@ import { PlayCircleFilled } from '@material-ui/icons/'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import SongRow from './SongRow'
+import BodyInfo from './BodyInfo'
 
 export default function Body({ spotify }) {
 
-  const [{ discover_weekly, }, dispatch] = useDataLayerValue()
+  const [{ discover_weekly, selected_playlist }, dispatch] = useDataLayerValue()
 
   const playPlaylist = (id) => {
     spotify
@@ -54,14 +55,7 @@ export default function Body({ spotify }) {
     <div className="body">
       <Header spotify={spotify} />
 
-      <div className="body-info">
-        <img src={discover_weekly?.images[0].url} alt="discover-weekly" />
-        <div className="body-infoText">
-          <strong>PLAYLIST</strong>
-          <h2>Discover Weekly</h2>
-          <p>{discover_weekly?.description}</p>
-        </div>
-      </div>
+      <BodyInfo discover_weekly={discover_weekly} selected_playlist={selected_playlist} />
 
       <div className="body-songs">
         <div className="body-icons">
