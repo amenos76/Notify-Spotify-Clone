@@ -52,6 +52,7 @@ function App() {
         country: 'US', 
       })
       .then((featured_playlists) => {
+        console.log('featured playlists', featured_playlists)
         dispatch({
           type: "SET_FEATURED_PLAYLISTS",
           featured_playlists: featured_playlists.playlists.items
