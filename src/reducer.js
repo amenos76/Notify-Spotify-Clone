@@ -9,6 +9,9 @@ export const initialState = {
   selected_artist: null,
   artist_is_selected: false,
   volume: 50,
+  animate: true,
+  bodyInfoClass: "body-info",
+  songRowClass: "songRowLeft-container",
   token: null
 }
 
@@ -93,6 +96,24 @@ const reducer = (state, action) => {
       return {
         ...state,
         artist_is_selected: action.artist_is_selected
+      }
+
+    case 'SET_ANIMATE':
+      return {
+        ...state,
+        animate: action.animate
+      }
+
+    case 'SET_BODY_INFO_CLASS':
+      return {
+        ...state,
+        bodyInfoClass: action.bodyInfoClass
+      }
+
+    case 'SET_SONG_ROW_CLASS':
+      return {
+        ...state,
+        songRowClass: action.songRowClass
       }
 
       

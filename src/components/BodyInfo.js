@@ -1,35 +1,42 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './BodyInfo.css'
 import { useDataLayerValue } from '../DataLayer'
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
 export default function BodyInfo( {selected} ) {
 
-  const [{ selected_artist, artist_is_selected }, dispatch] = useDataLayerValue()
-  
+  const [{ artist_is_selected, bodyInfoClass, selected_playlist }, dispatch] = useDataLayerValue()
+
+  // useEffect(() => {
+  //   console.log("HIT")
+  //   dispatch({
+  //     type: 'SET_BODY_INFO_CLASS',
+  //     bodyInfoClass: 'body-info'
+  //   })
+  // }, [selected_playlist]) 
+
   return (
-            <div className="body-info">
-              <img src={selected?.images[0].url} alt={selected?.name} />
-                <div className="body-infoText">
-                  <strong>PLAYLIST</strong>
-                  <h2>{selected?.name}</h2>
-                  {artist_is_selected ? (
-                    <p>{selected?.followers.total} Followers</p>
-                  ) : ( 
-                  <p>{selected?.description}</p>
-                  )}
-                </div>
-              
 
-              
-            {/* <img src={selected_artist?.images[0].url} alt={selected_artist?.name} />
-            <div className="body-infoText">
+    <div className={bodyInfoClass}>
+        <img src={selected?.images[0].url} alt={selected?.name} />
+        
+          <div className="body-infoText">
+            {artist_is_selected ? (
               <strong>ARTIST</strong>
-              <h2>{selected_artist?.name}</h2>
-              <p>{selected_artist?.followers} Followers</p>
-            </div> */}
+            ) : (
+              <strong>PLAYLIST</strong>
+            )}
 
-            </div>
+            <h2>{selected?.name}</h2>
+
+            {artist_is_selected ? (
+              <p>{selected?.followers.total} Followers</p>
+            ) : ( 
+              <p>{selected?.description}</p>
+            )}
+          </div>
+        </div>
   )
 }
 

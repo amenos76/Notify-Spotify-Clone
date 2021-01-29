@@ -92,7 +92,7 @@ export default function Footer({ spotify }) {
   };
 
   return (
-    <div className="footer">
+    <div className="footer animate__animated animate__fadeInUp">
 
       <div className='footer-left'>
         <img className="footer-albumLogo" src={item?.album.images[0].url} alt={item?.name} />
