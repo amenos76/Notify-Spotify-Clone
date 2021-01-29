@@ -11,10 +11,10 @@ export default function Sidebar() {
   const [{ discover_weekly, featured_playlists, playlists }, dispatch] = useDataLayerValue()
 
   return (
-    <div className="sidebar">
+    <div className="sidebar animate__animated animate__fadeInLeft">
       <img
         className="sidebar-logo" 
-        src="https://getheavy.com/wp-content/uploads/2019/12/spotify2019-830x350.jpg" 
+        src="https://i.imgur.com/XOYup9u.png" 
         alt="spotify-logo" 
       />
       <SidebarOption Icon={HomeIcon} title="Home" />

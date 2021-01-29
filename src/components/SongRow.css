@@ -34,13 +34,14 @@
   font-weight: 600;
   text-decoration: none;
   transition: 200ms ease-in-out;
-  
+  outline: none;
 }
 
 .artistDetails-button:hover {
   transform: scale(1.1);
   color: black;
   background-color: white;
+  cursor: pointer;
 }
 
 
