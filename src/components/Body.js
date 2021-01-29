@@ -1,7 +1,7 @@
 import React from 'react'
 import './Body.css'
-import Header from './Header'
 import { useDataLayerValue } from '../DataLayer'
+import Header from './Header'
 
 import { PlayCircleFilled } from '@material-ui/icons/'
 import FavoriteIcon from '@material-ui/icons/Favorite'
@@ -9,15 +9,13 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import SongRow from './SongRow'
 import BodyInfo from './BodyInfo'
 
+
 export default function Body({ spotify }) {
 
-  const [{ discover_weekly, selected_playlist }, dispatch] = useDataLayerValue()
+  const [{ discover_weekly, selected_playlist, selected_artist, artist_is_selected }, dispatch] = useDataLayerValue()
 
   const playPlaylist = () => {
-    spotify
-      .play({
-        context_uri: selected_playlist.uri,
-      })
+    spotify.play({context_uri: selected_playlist.uri,})
       .then((res) => {
         spotify.getMyCurrentPlayingTrack().then((r) => {
           dispatch({
@@ -60,8 +58,12 @@ export default function Body({ spotify }) {
     <div className="body">
       <Header spotify={spotify} />
 
-      <BodyInfo discover_weekly={discover_weekly} selected_playlist={selected_playlist} />
-
+      {artist_is_selected ? (
+      <BodyInfo selected={selected_artist} />
+      ) : (
+      <BodyInfo selected={selected_playlist} />
+      )}
+      
       <div className="body-songs">
         <div className="body-icons">
           <PlayCircleFilled onClick={playPlaylist} className="body-shuffle" />
@@ -73,5 +75,6 @@ export default function Body({ spotify }) {
         )}
       </div>
     </div>
+
   )
 }

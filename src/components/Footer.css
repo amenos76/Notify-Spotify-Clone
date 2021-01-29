@@ -33,6 +33,10 @@
   flex-direction: column;
 }
 
+.footer-songInfo > h4 {
+  padding-bottom: 10px;
+}
+
 .footer-center {
   display: flex;
   flex: 0.4;

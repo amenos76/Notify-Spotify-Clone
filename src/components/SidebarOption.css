@@ -4,7 +4,7 @@
   color: grey;
   height: 40px;
   cursor: pointer;
-  transition: 200ms color ease-in;
+  transition: 100ms color ease-in;
 }
 
 .sidebar > hr {
@@ -26,4 +26,9 @@
   margin-top: 10px;
   margin-left: 20px;
   font-size: 16px;
+  transition: 100ms ease-in-out;
+}
+
+.sidebarOption > p:hover {
+  transform: scale(1.1)
 }

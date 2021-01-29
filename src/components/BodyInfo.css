@@ -1,0 +1,29 @@
+.body-info {
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+}
+
+.body-info > img {
+  height: 20vw;
+  margin: 0 20px;
+  box-shadow: 0 4px 60px rgb( 0, 0, 0, 0.5);
+  transition: 200ms ease-in-out;
+}
+
+.body-info > img:hover {
+  transform: scale(1.1)
+}
+
+.body-infoText {
+  flex: 1;
+}
+
+.body-infoText > h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.body-infoText > p {
+  font-size: 18px;
+}
