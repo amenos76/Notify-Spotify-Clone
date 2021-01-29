@@ -1,7 +1,7 @@
 import React from 'react'
 import './Body.css'
-import Header from './Header'
 import { useDataLayerValue } from '../DataLayer'
+import Header from './Header'
 
 import { PlayCircleFilled } from '@material-ui/icons/'
 import FavoriteIcon from '@material-ui/icons/Favorite'
@@ -9,15 +9,13 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import SongRow from './SongRow'
 import BodyInfo from './BodyInfo'
 
+
 export default function Body({ spotify }) {
 
-  const [{ discover_weekly, selected_playlist }, dispatch] = useDataLayerValue()
+  const [{ discover_weekly, selected_playlist, selected_artist, artist_is_selected }, dispatch] = useDataLayerValue()
 
-  const playPlaylist = (id) => {
-    spotify
-      .play({
-        context_uri: `spotify:playlist:37i9dQZEVXcI9MOD0N706T`,
-      })
+  const playPlaylist = () => {
+    spotify.play({context_uri: selected_playlist.uri,})
       .then((res) => {
         spotify.getMyCurrentPlayingTrack().then((r) => {
           dispatch({
@@ -33,40 +31,50 @@ export default function Body({ spotify }) {
   };
 
   const playSong = (id) => {
-    spotify
-      .play({
-        uris: [`spotify:track:${id}`],
-      })
-      .then((res) => {
-        spotify.getMyCurrentPlayingTrack().then((r) => {
-          dispatch({
-            type: "SET_ITEM",
-            item: r.item,
+    let timeout 
+    
+    spotify.play({ uris: [`spotify:track:${id}`] })
+      clearTimeout(timeout)
+      timeout = setTimeout(() => {
+        // .then((res) => {
+          spotify.getMyCurrentPlayingTrack()
+          .then((r) => {
+            console.log("HERE DUMMY", r)
+            dispatch({
+              type: "SET_ITEM",
+              item: r.item,
+            });
+            dispatch({
+              type: "SET_PLAYING",
+              playing: true,
+            });
           });
-          dispatch({
-            type: "SET_PLAYING",
-            playing: true,
-          });
-        });
-      });
+        // });
+
+      }, 150)
   };
   
   return (
     <div className="body">
       <Header spotify={spotify} />
 
-      <BodyInfo discover_weekly={discover_weekly} selected_playlist={selected_playlist} />
-
+      {artist_is_selected ? (
+      <BodyInfo selected={selected_artist} />
+      ) : (
+      <BodyInfo selected={selected_playlist} />
+      )}
+      
       <div className="body-songs">
         <div className="body-icons">
           <PlayCircleFilled onClick={playPlaylist} className="body-shuffle" />
           <FavoriteIcon fontSize="large" />
           <MoreHorizIcon />
         </div>
-        {discover_weekly?.tracks.items.map((song, index) => 
+        {selected_playlist?.tracks.items.map((song, index) => 
           <SongRow playSong={playSong} track={song.track} key={index} />
         )}
       </div>
     </div>
+
   )
 }

@@ -4,7 +4,7 @@
   padding: 30px;
   color: white;
   overflow-y: overlay;
-  background: linear-gradient(rgb(91, 82, 115), rgba(0, 0, 0, 1))
+  background: linear-gradient(rgb(54, 82, 115), rgba(0, 0, 0, 1) 80%)
 }
 
 .body::-webkit-scrollbar {
@@ -54,9 +54,9 @@
   margin-left: 50px;
   margin-top: 20px;
   margin-bottom: 20px;
+  transition: 200ms ease-in-out;
 }
 
 .body-shuffle:hover {
-  transition: 100ms transform ease-in;
-  transform: scale(1.08)
+  transform: scale(1.1)
 }

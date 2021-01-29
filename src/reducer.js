@@ -6,11 +6,10 @@ export const initialState = {
   playing: false,
   item: null,
   spotify: null,
-  top_artists: null,
+  selected_artist: null,
+  artist_is_selected: false,
   volume: 50,
-  // remove string token before deployment
   token: null
-  // token: "BQAhiBrrtb57n5-VEDRy9coIlYrGZ7mu9w0uM0tOv4yrC4bn3k_CckR-SlT7vBEYC2oGIVGY6QZdvhyjz4Vpr4LXjQPKEF6j4unDbQV42OB3zJ0yCgb3pl8CJldxMsETkW2D1ydKGGkXQNshd-8DHvrf5g"
 }
 
 const reducer = (state, action) => {
@@ -84,6 +83,17 @@ const reducer = (state, action) => {
         featured_playlists: action.featured_playlists
       }
 
+    case 'SET_SELECTED_ARTIST':
+      return {
+        ...state,
+        selected_artist: action.selected_artist
+      }
+
+    case 'SET_ARTIST_IS_SELECTED':
+      return {
+        ...state,
+        artist_is_selected: action.artist_is_selected
+      }
 
       
     default:

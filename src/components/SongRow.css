@@ -1,15 +1,52 @@
 .songRow {
-  margin-left: 20px;
-  padding: 20px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin-left: 20px;
+  padding: 15px;
   z-index: 100;
+  transition: 200ms ease-in-out;
+  
+}
+
+.songRowLeft-container {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  padding: 15px;
   color: white;
 }
 
-.songRow:hover {
+.songRowLeft-container:hover {
   cursor: pointer;
+}
+
+.songRowRight-container {
+  padding-right: 30px;
+}
+
+.artistDetails-button {
+  background-color: #55555570;
+  color: white;
+  padding: 10px;
+  border-radius: 99px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 200ms ease-in-out;
+  
+}
+
+.artistDetails-button:hover {
+  transform: scale(1.1);
+  color: black;
+  background-color: white;
+}
+
+
+.songRow:hover {
   background-color: black;
+  transform: scale(1.05);
   opacity: 0.8;
 }
 
@@ -30,4 +67,9 @@
 .songRow-album {
   height: 40px;
   width: 40px;
+}
+
+.songRow-artist {
+  margin-left: 200px;
+  padding: 10px;
 }

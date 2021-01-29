@@ -24,12 +24,12 @@ export default function Footer({ spotify }) {
 
       dispatch({
         type: "SET_PLAYING",
-        playing: r.is_playing,
+        playing: r.is_playing
       });
 
       dispatch({
         type: "SET_ITEM",
-        item: r.item,
+        item: r.item
       });
     });
   }, [spotify]);
@@ -52,31 +52,34 @@ export default function Footer({ spotify }) {
 
   const skipNext = () => {
     spotify.skipToNext()
-    spotify.getMyCurrentPlayingTrack().then((r) => {
-      // console.log("skip next currently playing is:", r)
-      dispatch({
-        type: "SET_ITEM",
-        item: r.item,
+    .then((r) => {
+      spotify.getMyCurrentPlayingTrack().then((r) => {
+        dispatch({
+          type: "SET_ITEM",
+          item: r.item,
+        });
+        dispatch({
+          type: "SET_PLAYING",
+          playing: true,
+        });
       });
-      dispatch({
-        type: "SET_PLAYING",
-        playing: true,
-      });
-    });
+    })
   };
 
   const skipPrevious = () => {
-    spotify.skipToPrevious();
-    spotify.getMyCurrentPlayingTrack().then((r) => {
-      dispatch({
-        type: "SET_ITEM",
-        item: r.item,
+    spotify.skipToPrevious()
+    .then((r) => {
+      spotify.getMyCurrentPlayingTrack().then((r) => {
+        dispatch({
+          type: "SET_ITEM",
+          item: r.item,
+        });
+        dispatch({
+          type: "SET_PLAYING",
+          playing: true,
+        });
       });
-      dispatch({
-        type: "SET_PLAYING",
-        playing: true,
-      });
-    });
+    })
   };
 
   const changeVolume = (event, value) => {
