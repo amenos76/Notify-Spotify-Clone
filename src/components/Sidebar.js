@@ -8,14 +8,7 @@ import { useDataLayerValue } from '../DataLayer'
 
 export default function Sidebar() {
 
-  const [{ featured_playlists }, dispatch] = useDataLayerValue()
-
-  const selectPlaylist = (id) => {
-    dispatch({
-      type: "SET_SELECTED_PLAYLIST",
-      selected_playlist: id
-    });
-  }
+  const [{ discover_weekly, featured_playlists }, dispatch] = useDataLayerValue()
 
   return (
     <div className="sidebar">
@@ -31,9 +24,15 @@ export default function Sidebar() {
       <strong className="sidebar-title">FEATURED PLAYLISTS</strong>
       <hr />
 
+      {/* Discover weekly is <b>{discover_weekly ? 'indeed' : 'not' }</b> loaded */}
+      <SidebarOption title={discover_weekly?.name} playlist={discover_weekly} />
+
       {featured_playlists?.map(playlist => (
-        <SidebarOption title={playlist.name} key={playlist.id} playlist={playlist} selectPlaylist={selectPlaylist} />
+        <SidebarOption title={playlist.name} key={playlist.id} playlist={playlist} />
       ))}
+
+      {/* <strong className="sidebar-title">MY PLAYLISTS</strong>
+      <hr /> */}
     </div>
   )
 }

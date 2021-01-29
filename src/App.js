@@ -43,13 +43,17 @@ function App() {
           discover_weekly: discover_weekly
         })
 
-        // dispatch({
-        //   type: "SET_SELECTED_PLAYLIST",
-        //   selected_playlist: discover_weekly
-        // })
+        dispatch({
+          type: "SET_SELECTED_PLAYLIST",
+          selected_playlist: discover_weekly
+        })
       })
 
-      spotify.getFeaturedPlaylists().then((featured_playlists) => {
+      spotify.getFeaturedPlaylists({ 
+        limit : 15, 
+        country: 'US', 
+      })
+      .then((featured_playlists) => {
         dispatch({
           type: "SET_FEATURED_PLAYLISTS",
           featured_playlists: featured_playlists.playlists.items

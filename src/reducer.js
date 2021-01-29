@@ -8,9 +8,7 @@ export const initialState = {
   spotify: null,
   top_artists: null,
   volume: 50,
-  // remove string token before deployment
   token: null
-  // token: "BQAhiBrrtb57n5-VEDRy9coIlYrGZ7mu9w0uM0tOv4yrC4bn3k_CckR-SlT7vBEYC2oGIVGY6QZdvhyjz4Vpr4LXjQPKEF6j4unDbQV42OB3zJ0yCgb3pl8CJldxMsETkW2D1ydKGGkXQNshd-8DHvrf5g"
 }
 
 const reducer = (state, action) => {

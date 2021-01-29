@@ -13,10 +13,10 @@ export default function Body({ spotify }) {
 
   const [{ discover_weekly, selected_playlist }, dispatch] = useDataLayerValue()
 
-  const playPlaylist = (id) => {
+  const playPlaylist = () => {
     spotify
       .play({
-        context_uri: `spotify:playlist:37i9dQZEVXcI9MOD0N706T`,
+        context_uri: selected_playlist.uri,
       })
       .then((res) => {
         spotify.getMyCurrentPlayingTrack().then((r) => {
@@ -33,22 +33,27 @@ export default function Body({ spotify }) {
   };
 
   const playSong = (id) => {
-    spotify
-      .play({
-        uris: [`spotify:track:${id}`],
-      })
-      .then((res) => {
-        spotify.getMyCurrentPlayingTrack().then((r) => {
-          dispatch({
-            type: "SET_ITEM",
-            item: r.item,
+    let timeout 
+    
+    spotify.play({ uris: [`spotify:track:${id}`] })
+      clearTimeout(timeout)
+      timeout = setTimeout(() => {
+        // .then((res) => {
+          spotify.getMyCurrentPlayingTrack()
+          .then((r) => {
+            console.log("HERE DUMMY", r)
+            dispatch({
+              type: "SET_ITEM",
+              item: r.item,
+            });
+            dispatch({
+              type: "SET_PLAYING",
+              playing: true,
+            });
           });
-          dispatch({
-            type: "SET_PLAYING",
-            playing: true,
-          });
-        });
-      });
+        // });
+
+      }, 150)
   };
   
   return (
@@ -63,7 +68,7 @@ export default function Body({ spotify }) {
           <FavoriteIcon fontSize="large" />
           <MoreHorizIcon />
         </div>
-        {discover_weekly?.tracks.items.map((song, index) => 
+        {selected_playlist?.tracks.items.map((song, index) => 
           <SongRow playSong={playSong} track={song.track} key={index} />
         )}
       </div>

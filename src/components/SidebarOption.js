@@ -6,13 +6,20 @@ import { useDataLayerValue } from '../DataLayer'
 
 export default function SidebarOption({ title, Icon, playlist }) {
 
-  const [{ selected_playlist }, dispatch] = useDataLayerValue()
+  const [{ spotify, selected_playlist }, dispatch] = useDataLayerValue()
 
   const selectPlaylist = () => {
-    dispatch({
-      type: "SET_SELECTED_PLAYLIST",
-      selected_playlist: playlist
-    });
+    spotify.getPlaylist(playlist.id).then((r) => {
+      dispatch({
+        type: "SET_SELECTED_PLAYLIST",
+        selected_playlist: r
+      })
+    })
+
+    // dispatch({
+    //   type: "SET_SELECTED_PLAYLIST",
+    //   selected_playlist: playlist
+    // });
   }
 
   return (
