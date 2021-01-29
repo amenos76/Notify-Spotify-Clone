@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDataLayerValue } from '../DataLayer'
 import './Footer.css'
 
@@ -20,7 +20,6 @@ export default function Footer({ spotify }) {
 
   useEffect(() => {
     spotify.getMyCurrentPlaybackState().then((r) => {
-      // console.log(r);
 
       dispatch({
         type: "SET_PLAYING",
@@ -53,10 +52,10 @@ export default function Footer({ spotify }) {
   const skipNext = () => {
     spotify.skipToNext()
     .then((r) => {
-      spotify.getMyCurrentPlayingTrack().then((r) => {
+      spotify.getMyCurrentPlayingTrack().then((current_track) => {
         dispatch({
           type: "SET_ITEM",
-          item: r.item,
+          item: current_track.item,
         });
         dispatch({
           type: "SET_PLAYING",
@@ -69,10 +68,10 @@ export default function Footer({ spotify }) {
   const skipPrevious = () => {
     spotify.skipToPrevious()
     .then((r) => {
-      spotify.getMyCurrentPlayingTrack().then((r) => {
+      spotify.getMyCurrentPlayingTrack().then((current_track) => {
         dispatch({
           type: "SET_ITEM",
-          item: r.item,
+          item: current_track.item,
         });
         dispatch({
           type: "SET_PLAYING",
@@ -83,8 +82,8 @@ export default function Footer({ spotify }) {
   };
 
   const changeVolume = (event, value) => {
-    // console.log('Setting volume to:', value)
     spotify.setVolume(value)
+
     dispatch({
       type: "SET_VOLUME",
       volume: value
@@ -127,7 +126,6 @@ export default function Footer({ spotify }) {
         )}
         <SkipNextIcon onClick={skipNext} className="footer-icon" />
         <RepeatIcon className="footer-green" />
-
       </div>
 
       <div className='footer-right'>

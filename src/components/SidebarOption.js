@@ -6,7 +6,7 @@ import { useDataLayerValue } from '../DataLayer'
 
 export default function SidebarOption({ title, Icon, playlist }) {
 
-  const [{ spotify, animate, set_animate }, dispatch] = useDataLayerValue()
+  const [{ spotify }, dispatch] = useDataLayerValue()
 
   let timer
 
@@ -19,10 +19,6 @@ export default function SidebarOption({ title, Icon, playlist }) {
       dispatch({
         type: "SET_ARTIST_IS_SELECTED",
         artist_is_selected: false
-      });
-      dispatch({
-        type: "SET_ANIMATE",
-        animate: true,
       });
       dispatch({
         type: "SET_BODY_INFO_CLASS",
@@ -44,11 +40,6 @@ export default function SidebarOption({ title, Icon, playlist }) {
         })
       }, 1100)
     })
-
-    // dispatch({
-    //   type: "SET_SELECTED_PLAYLIST",
-    //   selected_playlist: playlist
-    // });
   }
 
   return (

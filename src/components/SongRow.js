@@ -10,10 +10,8 @@ export default function SongRow({ track, playSong }) {
   let timer
 
   const handleClick = () => {
-    // console.log(track.artists[0].id)
     spotify.getArtist(track.artists[0].id)
-      .then(artist => {
-        console.log(artist)
+    .then(artist => {
         dispatch({
           type: "SET_SELECTED_ARTIST",
           selected_artist: artist
@@ -26,8 +24,9 @@ export default function SongRow({ track, playSong }) {
           type: "SET_BODY_INFO_CLASS",
           bodyInfoClass: "body-info animate__animated animate__fadeInLeft",
         })
+        
         clearTimeout(timer)
-      timer = setTimeout(() => { 
+        timer = setTimeout(() => { 
         dispatch({
           type: 'SET_BODY_INFO_CLASS',
           bodyInfoClass: 'body-info'
@@ -37,9 +36,7 @@ export default function SongRow({ track, playSong }) {
           songRowClass: 'songRowLeft-container'
         })
       }, 1100)
-
-
-      })
+    })
   }
 
   return (

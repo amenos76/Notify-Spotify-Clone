@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
 import './Body.css'
 import { useDataLayerValue } from '../DataLayer'
 import Header from './Header'
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { PlayCircleFilled } from '@material-ui/icons/'
 import FavoriteIcon from '@material-ui/icons/Favorite'
@@ -14,14 +12,7 @@ import BodyInfo from './BodyInfo'
 export default function Body({ spotify }) {
 
  
-  const [{ selected, selected_playlist, selected_artist, artist_is_selected }, dispatch] = useDataLayerValue()
-
-  // useEffect(() => {
-  //   dispatch({
-  //     type: 'SET_BODY_INFO_CLASS',
-  //     bodyInfoClass: 'body-info'
-  //   })
-  // }, [selected_playlist])
+  const [{ selected_playlist, selected_artist, artist_is_selected }, dispatch] = useDataLayerValue()
 
   const playPlaylist = () => {
     spotify.play({context_uri: selected_playlist.uri,})
@@ -39,35 +30,24 @@ export default function Body({ spotify }) {
       });
   };
 
+  let timeout 
   const playSong = (id) => {
-    let timeout 
-    
     spotify.play({ uris: [`spotify:track:${id}`] })
       clearTimeout(timeout)
       timeout = setTimeout(() => {
-        // .then((res) => {
           spotify.getMyCurrentPlayingTrack()
-          .then((r) => {
-            console.log("HERE DUMMY", r)
+          .then((current_track) => {
             dispatch({
               type: "SET_ITEM",
-              item: r.item,
+              item: current_track.item,
             });
             dispatch({
               type: "SET_PLAYING",
               playing: true,
             });
           });
-        // });
-
-      }, 150)
+      }, 50)
   };
-
-  // const renderSongs = () => {
-  //   selected_playlist?.tracks.items.map((song, index) => 
-  //     <SongRow playSong={playSong} track={song.track} key={index} />
-  //   )
-  // }
   
   return (
     <div className="body animate__animated animate__fadeInDown">
@@ -86,13 +66,10 @@ export default function Body({ spotify }) {
           <MoreHorizIcon />
         </div>
 
-
-        {selected_playlist?.tracks.items.map((song, index) => 
-          <SongRow playSong={playSong} track={song.track} key={index} />
-        )}
-        
+      {selected_playlist?.tracks.items.map((song, index) => 
+        <SongRow playSong={playSong} track={song.track} key={index} />
+      )}
       </div>
     </div>
-
   )
 }

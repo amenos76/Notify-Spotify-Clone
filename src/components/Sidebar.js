@@ -8,7 +8,7 @@ import { useDataLayerValue } from '../DataLayer'
 
 export default function Sidebar() {
 
-  const [{ discover_weekly, featured_playlists, playlists }, dispatch] = useDataLayerValue()
+  const [{ discover_weekly, featured_playlists, playlists }] = useDataLayerValue()
 
   return (
     <div className="sidebar animate__animated animate__fadeInLeft">

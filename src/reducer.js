@@ -2,14 +2,12 @@ export const initialState = {
   user: null,
   playlists: [],
   selected_playlist: null,
-  featured_playlists: null,
   playing: false,
   item: null,
   spotify: null,
   selected_artist: null,
   artist_is_selected: false,
   volume: 50,
-  animate: true,
   bodyInfoClass: "body-info",
   songRowClass: "songRowLeft-container",
   token: null
@@ -80,12 +78,6 @@ const reducer = (state, action) => {
         selected_playlist: action.selected_playlist
       }
 
-    case 'SET_FEATURED_PLAYLISTS':
-      return {
-        ...state,
-        featured_playlists: action.featured_playlists
-      }
-
     case 'SET_SELECTED_ARTIST':
       return {
         ...state,
@@ -96,12 +88,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         artist_is_selected: action.artist_is_selected
-      }
-
-    case 'SET_ANIMATE':
-      return {
-        ...state,
-        animate: action.animate
       }
 
     case 'SET_BODY_INFO_CLASS':

@@ -44,7 +44,6 @@
   cursor: pointer;
 }
 
-
 .songRow:hover {
   background-color: black;
   transform: scale(1.05);
