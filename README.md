@@ -36,7 +36,7 @@ run $ npm start
 
 * Authenticate using your own Spotify account to gain access to your unique playlists!
 
-![gif of highlights](http://www.giphy.com/gifs/KdjqqtzvDgJfAzSnQD) 
+![gif of highlights](https://media.giphy.com/media/KdjqqtzvDgJfAzSnQD/giphy.gif) 
 
 * Discover and play new music!
 
