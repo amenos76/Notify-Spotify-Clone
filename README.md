@@ -46,7 +46,7 @@ run $ npm start
 
 * Control the official Spotify app's playback and volume controls!
 
-![gif of sharing menu](") 
+![gif of playback control](https://media.giphy.com/media/eJcJ42IEgFMGBzbGhR/giphy.gif) 
 
 
 
