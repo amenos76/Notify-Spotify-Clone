@@ -40,7 +40,9 @@ run $ npm start
 
 * Discover and play new music!
 
-![gif of music details](")
+![gif of music details](https://media.giphy.com/media/brmrr0rqEHjV0nIkyG/giphy.gif)
+
+![gif of playing songs](https://media.giphy.com/media/ESez5BbGiYkBovJmrn/giphy.gif)
 
 * Control the official Spotify app's playback and volume controls!
 
